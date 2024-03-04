@@ -109,6 +109,7 @@ services:
       - "./OPD-DB/:/var/lib/mysql"
     environment:
       MARIADB_ROOT_PASSWORD: ${OPD_DB_PASSWORD}
+      MARIADB_DATABASE: "opd"
     healthcheck:
       test: [ "CMD", "healthcheck.sh", "--su-mysql", "--connect", "--innodb_initialized" ]
       interval: 5s
