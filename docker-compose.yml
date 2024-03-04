@@ -1,0 +1,135 @@
+services:
+  postgres:
+    container_name: "KeyCloak-Postgres"
+    image: postgres:15
+    restart: unless-stopped
+    volumes:
+      - ./KeyCloak-DB:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: ${KEYCLOAK_DB_PASSWORD}
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}" ]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  keycloak:
+    container_name: "KeyCloak"
+    image: quay.io/keycloak/keycloak:latest
+    restart: unless-stopped
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres:5432/keycloak
+      KC_DB_USERNAME: keycloak
+      DB_SCHEMA: public
+      KC_DB_PASSWORD: ${KEYCLOAK_DB_PASSWORD}
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN_USERNAME}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+      KEYCLOAK_BACKEND_URL: ${BACKEND_URL}
+      KEYCLOAK_FRONTEND_URL: ${FRONTEND_URL}
+    command:
+      - start
+      - --import-realm
+      - --hostname-url=${KEYCLOAK_URL}
+      - --proxy=edge
+      - --spi-theme-welcome-theme=disable-welcome
+    ports:
+      - 8888:8080
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - "./KeyCloak/Import/realm.json:/opt/keycloak/data/import/realm.json:ro"
+    healthcheck:
+      test: cat /proc/net/tcp | grep '00000000:1F90 00000000:0000' || exit 1
+      interval: 5s
+      timeout: 2s
+      retries: 20
+
+  opd-backend:
+    container_name: "OPD-Backend"
+    image: harbor.codesystem.org/opd/server:${STAGE}
+    restart: unless-stopped
+    volumes:
+      - "./Packages:/opt/OPD/Packages"
+    depends_on:
+      opd-db:
+        condition: service_healthy
+      keycloak:
+        condition: service_healthy
+    ports:
+      - 8080:8080
+    environment:
+      #Swagger
+      "springdoc.swagger-ui.enabled": "false"
+      "springdoc.api-docs.enabled": "false"
+      "springdoc.swagger-ui.operationsSorter": "method"
+      "springdoc.default-produces-media-type": "application/json"
+      "springdoc.swagger-ui.validator-url": "null"
+      "springdoc.swagger-ui.try-it-out-enabled": "true"
+      "springdoc.swagger-ui.persist-authorization": "true"
+      "springdoc.swagger-ui.filter": "true"
+      "springdoc.swagger-ui.default-models-expand-depth": "-1"
+      #DB Settings
+      "database.url": "jdbc:mariadb://opd-db:3306"
+      "database.default-schema": "opd"
+      "spring.datasource.url": "$${database.url}/$${database.default-schema}"
+      "spring.datasource.username": "root"
+      "spring.datasource.password": ${OPD_DB_PASSWORD}
+      "spring.jpa.defer-datasource-initialization": "true"
+      "spring.datasource.driver-class-name": "org.mariadb.jdbc.Driver"
+      "spring.jpa.properties.hibernate.check_nullability": "true"
+
+      #Hibernate
+      "spring.jpa.properties.hibernate.hbm2ddl.auto": "update"
+      #CORS Settings
+      "cors.whitelisting.url": ${FRONTEND_URL}
+      #KeyCloak Settings
+      "spring.security.oauth2.resourceserver.jwt.issuer-uri": ${KEYCLOAK_URL}/realms/OPD
+      "jwt.auth.converter.resource-id": OPD
+      "jwt.auth.converter.principal-attribute": "preferred_username"
+      #HTTP-Multipart
+      "spring.servlet.multipart.max-file-size": "-1"
+      "spring.servlet.multipart.max-request-size": "-1"
+
+    healthcheck:
+      test: [ "CMD", "wget", "-O -", "http://localhost:8080/monitoring/health" ]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+
+  opd-db:
+    container_name: "OPD-MariaDB"
+    image: harbor.codesystem.org/database/mariadb:latest
+    restart: unless-stopped
+    volumes:
+      - "./OPD-DB/:/var/lib/mysql"
+    environment:
+      MARIADB_ROOT_PASSWORD: ${OPD_DB_PASSWORD}
+    healthcheck:
+      test: [ "CMD", "healthcheck.sh", "--su-mysql", "--connect", "--innodb_initialized" ]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+
+  opd-frontend:
+    container_name: "OPD-Frontend"
+    image: harbor.codesystem.org/opd/frontend:${STAGE}
+    restart: unless-stopped
+    ports:
+      - 80:80
+    environment:
+      "FRONTEND_URL": ${FRONTEND_URL}
+      "BACKEND_URL": ${BACKEND_URL}
+      "KEYCLOAK_URL": ${KEYCLOAK_URL}
+      "KEYCLOAK_REALM": "OPD"
+      "KEYCLOAK_CLIENT_ID": "OPD"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost" ]
+      interval: 5s
+      timeout: 3s
+      retries: 20
