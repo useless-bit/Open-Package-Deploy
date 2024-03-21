@@ -20,6 +20,7 @@ services:
     image: quay.io/keycloak/keycloak:latest
     restart: unless-stopped
     environment:
+      KC_HEALTH_ENABLED: true
       KC_DB: postgres
       KC_DB_URL: jdbc:postgresql://postgres:5432/keycloak
       KC_DB_USERNAME: keycloak
@@ -43,7 +44,7 @@ services:
     volumes:
       - "./KeyCloak/Import/realm.json:/opt/keycloak/data/import/realm.json:ro"
     healthcheck:
-      test: cat /proc/net/tcp | grep '00000000:1F90 00000000:0000' || exit 1
+      test: ["CMD-SHELL", "exec 3<>/dev/tcp/127.0.0.1/8080;echo -e \"GET /health/ready HTTP/1.1\r\nhost: http://localhost\r\nConnection: close\r\n\r\n\" >&3;grep \"HTTP/1.1 200 OK\" <&3"]      
       interval: 5s
       timeout: 2s
       retries: 20
