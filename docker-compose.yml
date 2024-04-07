@@ -95,6 +95,10 @@ services:
       "spring.servlet.multipart.max-file-size": "-1"
       "spring.servlet.multipart.max-request-size": "-1"
 
+      #OPD-Settings
+      "opd.log.delete-threshold":"2592000"
+      "opd.system-usage.delete-threshold":"604800"
+
     healthcheck:
       test: [ "CMD", "wget", "-O -", "http://localhost:8080/monitoring/health" ]
       interval: 5s
