@@ -33,7 +33,7 @@ services:
     command:
       - start
       - --import-realm
-      - --hostname-url=${KEYCLOAK_URL}
+      - --hostname=${KEYCLOAK_URL}
       - --proxy=edge
       - --spi-theme-welcome-theme=disable-welcome
     ports:
