@@ -10,9 +10,12 @@ The Code for the [Backend (Server and Agent)](https://github.com/useless-bit/Ope
 * [Open Package Deploy](#open-package-deploy)
 * [Features](#features)
 * [Installation](#installation)
+* [Agent Functionality](#agent-functionality)
+  * [When will the Agent contact the Server](#when-will-the-agent-contact-the-server)
 * [Security](#security)
   * [Agent-Server Communication](#agent-server-communication)
   * [Packages](#packages)
+  * [Agent Registration](#agent-registration)
 <!-- TOC -->
 
 # Features
@@ -32,18 +35,42 @@ To get OPD up and running, follow the [Quickstart Guide](Documentation/Quickstar
 There you will set up OPD, Keycloak and the required Databases using Docker and Docker Compose.
 
 
+# Agent Functionality
+
+This is a short description on how and when the Agent will contact the Server and what information is transmitted.
+
+## When will the Agent contact the Server
+
+The Agent will contact and ask the Server for Updates in three scenarios:
+
+- Agent Startup
+- `Update Interval` timer is expired
+- After successfully processing a Package
+
+## Update Request Content
+
+When the Agent asks the Server for Updates, it will get and process the following data:
+
+- Agent Checksum (for Auto Update): <br>
+    Start Auto Update for Agent if Checksum is different
+- `Update Interval`: <br>
+    Update the value in the local config-file and restart the Agent
+- Is a deployment available: <br>
+    Start the Package download and installation process
+
+
 # Security
 
 ## Agent-Server Communication
 
 The communication between the Agent(Endpoint/Client) and the Server is fully encrypted and signed.
 
-Every request is first signed and then encrypted using Asymmetric Encryption. 
+Every request is first signed and then encrypted using Asymmetric Cryptography. 
 The Signature is using the `SHA512withECDSA`-Algorithm while the encryption uses `ECIES/None/NoPadding`.
 
-If a request is received, the content is first decrypted and then verified with the signature. If a error occurs, the request gets dropped.
+If a request is received, the content is first decrypted and then verified with the signature. If an error occurs, the request gets dropped.
 
-Every Agent will generate its own Public- and Private-Keypair. During the registration process, the Agent will get the Public-Key from the Server and sends its own Public-Key to it as well.
+Every Agent will generate its own Public- and Private-Keypair. During the registration process, the Agent will send its Public-Key to the Server and gets the Servers' Public-Key.
 
 ## Packages
 
@@ -51,6 +78,8 @@ All uploaded Packages will be encrypted before they can/will be delivered to Age
 A Package will never be sent in plaintext to an Agent.
 
 Every Package is encrypted using a unique Key and IV for the `AES/GCM/NoPadding`-Algorithm.
+
+After the Package is uploaded, checksums will be calculated and the Package will get encrypted. The Plaintext-Package will be deleted afterward.
 
 ## Agent Registration
 
