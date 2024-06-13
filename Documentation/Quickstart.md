@@ -2,7 +2,6 @@
 ## Prerequisites
 
 - Docker & Docker Compose
-- Reverse Proxy (like Nginx)
 
 ## Run the Project
 To run OPD (Front- and Backend), follow these steps:
