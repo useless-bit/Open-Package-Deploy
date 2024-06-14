@@ -5,19 +5,20 @@ OPD (Open Package Deploy) allows you to deploy almost everything, everywhere, in
 The Code for the [Backend (Server and Agent)](https://github.com/useless-bit/Open-Package-Deploy-Backend) and
 the [Frontend](https://github.com/useless-bit/Open-Package-Deploy-Frontend) is available on GitHub.
 
-You can find some Screenshots of the UI in the [User Guide](Documentation/User_guide.md) or this [Image Folder](Documentation/images/OPD).
+You can find some Screenshots of the UI in the [User Guide](Documentation/User_guide.md) or
+this [Image Folder](Documentation/images/OPD).
 
 ![Image of Dashboard](Documentation/images/OPD/OPD_Dashboard.png)
 
 <!-- TOC -->
 * [Open Package Deploy](#open-package-deploy)
 * [Features](#features)
+* [What can be deployed](#what-can-be-deployed)
 * [Installation](#installation)
 * [User Guide](#user-guide)
 * [Agent Functionality](#agent-functionality)
   * [When will the Agent contact the Server](#when-will-the-agent-contact-the-server)
   * [Update Request Content](#update-request-content)
-* [What can be deployed](#what-can-be-deployed)
 * [Security](#security)
   * [Agent-Server Communication](#agent-server-communication)
   * [Packages](#packages)
@@ -33,6 +34,24 @@ You can find some Screenshots of the UI in the [User Guide](Documentation/User_g
 - Multi-User capable
 - Web-App is mobile friendly
 - Agent Auto-Update
+
+# What can be deployed
+
+OPD was designed to be usable for many different use cases.
+
+The Agent will execute a script (`start.sh` for Linux and macOS and `start.bat` for Windows) that you provide inside a
+Package. From there, you can do almost anything.
+
+You can get more infos in the Guide: [Create a Package]()
+
+Examples:
+
+* Install Software through a package manager or included installer-file
+* Copy included files to a destination
+* Change System-configurations
+
+Example Packages will be provided in
+this [GitHub Repository](https://github.com/useless-bit/Open-Package-Deploy-Packages).
 
 # Installation
 
@@ -67,21 +86,6 @@ When the Agent asks the Server for Updates, it will get and process the followin
   Update the value in the local config-file and restart the Agent
 - Is a deployment available: <br>
   Start the Package download and installation process
-
-# What can be deployed
-
-OPD was designed to be usable for many different use cases. 
-
-The Agent will execute a script (`start.sh` for Linux and macOS and `start.bat` for Windows) that you provide inside a Package. From there, you can do almost anything. 
-
-You can get more infos in the Guide: [Create a Package]()
-
-Examples:
-* Install Software through a package manager or included installer-file
-* Copy included files to a destination
-* Change System-configurations
-
-Example Packages will be provided in this [GitHub Repository](https://github.com/useless-bit/Open-Package-Deploy-Packages).
 
 # Security
 

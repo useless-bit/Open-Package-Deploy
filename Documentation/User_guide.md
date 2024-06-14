@@ -10,6 +10,11 @@
 * [Groups](#groups)
   * [Create new Group](#create-new-group)
   * [Group Details](#group-details)
+* [Packages](#packages)
+  * [Add new Package](#add-new-package)
+  * [Package Details](#package-details)
+* [Deployments](#deployments)
+  * [Deployment Details](#deployment-details)
 <!-- TOC -->
 
 # Filter Options
@@ -93,4 +98,47 @@ When you click on a group, you will get an popup, similar to [Agent Details](#ag
 
 ![Group Detail popup](images/OPD/OPD_group_details.png)
 
+# Packages
+
+Here you can manage all of your Packages.
+
+![Package Overview](images/OPD/OPD_Packages.png)
+
+## Add new Package
+
+If you want to add a new Package, press the `Add Package`- Button.
+
+In this popup, you have to specify a Name, the Checksum, the OS and a file. You can optionally specify an expected
+return
+value.
+
+If you want more information on how to create and add/update a Package, head over to the [Create a Package Guide]().
+
+![Add new Package](images/OPD/OPD_add_new_package.png)
+
+## Package Details
+
+When opening the details of a Package,
+
+The Button `Reset Deployments` will reset the status for all deployments for this Package.
+
+The Button `Update Content` allows you to upload a Package, that will replace the current one.
+
+![Package Details](images/OPD/OPD_package_details.png)
+
+# Deployments
+
+Here you have an overview of all deployments.
+
+Explanation of values:
+
+* `Direct Deployment`: If `true` the Package was manually(directly) deployed to the Agent. If `false`, the Package is
+  deployed through at minimum one group.
+* 
+
+![Deployment Overview](images/OPD/OPD_Deployments.png)
+
+## Deployment Details
+
+![Deployment Details](images/OPD/OPD_deployment_details.png)
 
