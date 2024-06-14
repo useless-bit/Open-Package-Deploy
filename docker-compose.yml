@@ -1,10 +1,10 @@
 services:
   postgres:
-    container_name: "KeyCloak-Postgres"
-    image: postgres:15
+    container_name: "Keycloak-Postgres"
+    image: postgres:16-alpine
     restart: unless-stopped
     volumes:
-      - ./KeyCloak-DB:/var/lib/postgresql/data
+      - ./Keycloak-DB:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: keycloak
       POSTGRES_USER: keycloak
@@ -16,10 +16,11 @@ services:
       retries: 20
 
   keycloak:
-    container_name: "KeyCloak"
+    container_name: "Keycloak"
     image: quay.io/keycloak/keycloak:latest
     restart: unless-stopped
     environment:
+      KC_HEALTH_ENABLED: true
       KC_DB: postgres
       KC_DB_URL: jdbc:postgresql://postgres:5432/keycloak
       KC_DB_USERNAME: keycloak
@@ -31,26 +32,24 @@ services:
       KEYCLOAK_FRONTEND_URL: ${FRONTEND_URL}
     command:
       - start
-      - --import-realm
-      - --hostname-url=${KEYCLOAK_URL}
-      - --proxy=edge
-      - --spi-theme-welcome-theme=disable-welcome
+      - --hostname=${KEYCLOAK_URL}
+      - --proxy-headers=xforwarded
+      - --http-enabled=true
     ports:
       - 8888:8080
     depends_on:
       postgres:
         condition: service_healthy
-    volumes:
-      - "./KeyCloak/Import/realm.json:/opt/keycloak/data/import/realm.json:ro"
     healthcheck:
-      test: cat /proc/net/tcp | grep '00000000:1F90 00000000:0000' || exit 1
+      test: ["CMD-SHELL", "exit 0"]
+      #test: ["CMD-SHELL", "exec 3<>/dev/tcp/127.0.0.1/8080;echo -e \"GET /health/ready HTTP/1.1\r\nhost: http://localhost\r\nConnection: close\r\n\r\n\" >&3;grep \"HTTP/1.1 200 OK\" <&3"]      
       interval: 5s
       timeout: 2s
       retries: 20
 
   opd-backend:
     container_name: "OPD-Backend"
-    image: harbor.codesystem.org/opd/server:${STAGE}
+    image: uselessbit/opd-backend:${STAGE}
     restart: unless-stopped
     volumes:
       - "./Packages:/opt/OPD/Packages"
@@ -81,18 +80,20 @@ services:
       "spring.jpa.defer-datasource-initialization": "true"
       "spring.datasource.driver-class-name": "org.mariadb.jdbc.Driver"
       "spring.jpa.properties.hibernate.check_nullability": "true"
-
       #Hibernate
       "spring.jpa.properties.hibernate.hbm2ddl.auto": "update"
       #CORS Settings
       "cors.whitelisting.url": ${FRONTEND_URL}
-      #KeyCloak Settings
-      "spring.security.oauth2.resourceserver.jwt.issuer-uri": ${KEYCLOAK_URL}/realms/OPD
-      "jwt.auth.converter.resource-id": OPD
+      #Keycloak Settings
+      "spring.security.oauth2.resourceserver.jwt.issuer-uri": ${KEYCLOAK_URL}/realms/${KEYCLOAK_REALM}
+      "jwt.auth.converter.resource-id": ${KEYCLOAK_CLIENT_ID}
       "jwt.auth.converter.principal-attribute": "preferred_username"
       #HTTP-Multipart
       "spring.servlet.multipart.max-file-size": "-1"
       "spring.servlet.multipart.max-request-size": "-1"
+      #OPD-Settings
+      "opd.log.delete-threshold": "2592000"
+      "opd.system-usage.delete-threshold": "604800"
 
     healthcheck:
       test: [ "CMD", "wget", "-O -", "http://localhost:8080/monitoring/health" ]
@@ -103,12 +104,13 @@ services:
 
   opd-db:
     container_name: "OPD-MariaDB"
-    image: harbor.codesystem.org/database/mariadb:latest
+    image: mariadb:latest
     restart: unless-stopped
     volumes:
       - "./OPD-DB/:/var/lib/mysql"
     environment:
       MARIADB_ROOT_PASSWORD: ${OPD_DB_PASSWORD}
+      MARIADB_DATABASE: "opd"
     healthcheck:
       test: [ "CMD", "healthcheck.sh", "--su-mysql", "--connect", "--innodb_initialized" ]
       interval: 5s
@@ -118,7 +120,7 @@ services:
 
   opd-frontend:
     container_name: "OPD-Frontend"
-    image: harbor.codesystem.org/opd/frontend:${STAGE}
+    image: uselessbit/opd-frontend:${STAGE}
     restart: unless-stopped
     ports:
       - 80:80
@@ -126,8 +128,8 @@ services:
       "FRONTEND_URL": ${FRONTEND_URL}
       "BACKEND_URL": ${BACKEND_URL}
       "KEYCLOAK_URL": ${KEYCLOAK_URL}
-      "KEYCLOAK_REALM": "OPD"
-      "KEYCLOAK_CLIENT_ID": "OPD"
+      "KEYCLOAK_REALM": ${KEYCLOAK_REALM}
+      "KEYCLOAK_CLIENT_ID": ${KEYCLOAK_CLIENT_ID}
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost" ]
       interval: 5s
