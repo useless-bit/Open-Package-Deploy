@@ -32,7 +32,7 @@ Keycloak to send Emails.
 If you don't want to log in to Keycloak as often, you can increase the `Session Lifetime`. For this, go to
 the `Realm Settings` on the navbar and then to the Option `Sessions`.
 
-You can change the `SSO Session Settings` to stay logged in for longer. The image below shows
+You can change the `SSO Session Settings` to stay logged in for longer. The image below shows higher values than default.
 
 ![Update SSO Settings](images/Keycloak/Keycloak_update_sso_session.png)
 
