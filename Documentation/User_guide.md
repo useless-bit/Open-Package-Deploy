@@ -14,6 +14,8 @@
   * [Add new Package](#add-new-package)
   * [Package Details](#package-details)
 * [Deployments](#deployments)
+  * [When is a package successfully deployed](#when-is-a-package-successfully-deployed)
+  * [Agent Errors](#agent-errors)
   * [Deployment Details](#deployment-details)
 <!-- TOC -->
 
@@ -90,7 +92,7 @@ multiple Packages and Agents.
 To create a new group, simply use the `New Group`-Button. You have to select an OS and a Name with an optional
 description.
 
-![Create Group](images/OPD/OPD_Groups.png)
+![Create Group](images/OPD/OPD_group_create.png)
 
 ## Group Details
 
@@ -133,8 +135,39 @@ Here you have an overview of all deployments.
 Explanation of values:
 
 * `Direct Deployment`: If `true` the Package was manually(directly) deployed to the Agent. If `false`, the Package is
-  deployed through at minimum one group.
-* 
+  deployed through at minimum one group. If a Package is available through a group and as a direct deployment, it will
+  be `true` until the deployment gets deleted. Then it will turn to `false` and is deployed through the group.
+* `Deployed`: `true` if the Package was successfully deployed on the Agent, otherwise `false`.
+* `Expected Return (Value)`: Is the value specified for the Package itself. Defines when a package is considered
+  successfully deployed (more infos
+  at [When is a package successfully deployed](#when-is-a-package-successfully-deployed)).
+* `Actual Return (Value)`: The value returned from the package (after executing the main script).
+* `Last Deployed At/Last Deployment Time`: Time when the Package was deployed on the Agent itself.
+
+## When is a package successfully deployed
+
+* If the `Expectet Return (Value)` for a Package is empty, every response code (except `AGENT-DEPLOYMENT-ERROR`) are
+  considered successful.
+* If the `Expectet Return (Value)` for a Package is not empty, the deployment is considered successful when the
+  Agent reports the specified/required value from the package deployment process.
+* A return value starting with `AGENT-DEPLOYMENT-ERROR` is always considered unsuccessful, as it indicates an error
+  on the Agent side. More infos at [Agent Errors](#agent-errors)
+
+## Agent Errors
+
+The Agent can return a `return value` starting with `AGENT-DEPLOYMENT-ERROR` to indicate an error. The following errors
+can be returned in this case:
+
+* `UNKNOWN_ERROR`:
+* `DECRYPTION_FAILED`:
+* `PLAINTEXT_CHECKSUM_MISMATCH`:
+* `ENCRYPTED_CHECKSUM_MISMATCH`:
+* `ENTRYPOINT_NOT_FOUND`:
+
+If an `Actual Return (Value)` starts with `AGENT-DEPLOYMENT-ERROR`, an error occurred on the Agent. These are the
+possible errors:
+
+* test
 
 ![Deployment Overview](images/OPD/OPD_Deployments.png)
 
