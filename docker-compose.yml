@@ -1,10 +1,10 @@
 services:
   postgres:
-    container_name: "KeyCloak-Postgres"
+    container_name: "Keycloak-Postgres"
     image: postgres:16-alpine
     restart: unless-stopped
     volumes:
-      - ./KeyCloak-DB:/var/lib/postgresql/data
+      - ./Keycloak-DB:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: keycloak
       POSTGRES_USER: keycloak
@@ -16,7 +16,7 @@ services:
       retries: 20
 
   keycloak:
-    container_name: "KeyCloak"
+    container_name: "Keycloak"
     image: quay.io/keycloak/keycloak:latest
     restart: unless-stopped
     environment:
@@ -84,7 +84,7 @@ services:
       "spring.jpa.properties.hibernate.hbm2ddl.auto": "update"
       #CORS Settings
       "cors.whitelisting.url": ${FRONTEND_URL}
-      #KeyCloak Settings
+      #Keycloak Settings
       "spring.security.oauth2.resourceserver.jwt.issuer-uri": ${KEYCLOAK_URL}/realms/${KEYCLOAK_REALM}
       "jwt.auth.converter.resource-id": ${KEYCLOAK_CLIENT_ID}
       "jwt.auth.converter.principal-attribute": "preferred_username"
