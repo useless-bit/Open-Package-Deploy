@@ -42,7 +42,7 @@ OPD was designed to be usable for many different use cases.
 The Agent will execute a script (`start.sh` for Linux and macOS and `start.bat` for Windows) that you provide inside a
 Package. From there, you can do almost anything.
 
-You can get more infos in the Guide: [Create a Package]()
+You can get more infos in the Guide: [Create a Package](Documentation/create_package.md)
 
 Examples:
 

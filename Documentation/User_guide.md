@@ -120,7 +120,7 @@ In this popup, you have to specify a Name, the Checksum, the OS and a file. You 
 return
 value.
 
-If you want more information on how to create and add/update a Package, head over to the [Create a Package Guide]().
+If you want more information on how to create and add/update a Package, head over to the [Create a Package Guide](create_package.md).
 
 ![Add new Package](images/OPD/OPD_add_new_package.png)
 
