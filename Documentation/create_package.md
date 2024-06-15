@@ -40,7 +40,15 @@ the checksum.
 The checksum must be `SHA3-512`.
 
 ```shell
-#todo add script
+#!/bin/bash
+
+zip -r "$(basename "$PWD").zip" . -x "create_OPD-Package.sh" -x "$(basename "$PWD").zip"
+
+checksum=$(openssl dgst -sha3-512 "$(basename "$PWD").zip")
+checksum=$(echo "$checksum" | sed 's/.*)= //')
+
+echo "Package: $(basename "$PWD")"
+echo "Checksum: $checksum"
 ```
 
 ## Upload a Package
