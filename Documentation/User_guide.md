@@ -17,6 +17,12 @@
   * [When is a package successfully deployed](#when-is-a-package-successfully-deployed)
   * [Agent Errors](#agent-errors)
   * [Deployment Details](#deployment-details)
+* [Settings](#settings)
+  * [Registration Token](#registration-token)
+  * [Update Interval](#update-interval)
+  * [Install Retry Interval](#install-retry-interval)
+  * [Deployment Validation](#deployment-validation)
+* [Logs](#logs)
 <!-- TOC -->
 
 # Filter Options
@@ -161,7 +167,7 @@ The Agent can return a `return value` starting with `AGENT-DEPLOYMENT-ERROR` to 
 can be returned in this case:
 
 * `UNKNOWN_ERROR`: This message should include more details with the actual error that occurred.
-  * `Package timeout during deployment`: The deployment was stopped after running for 1 hour.
+    * `Package timeout during deployment`: The deployment was stopped after running for 1 hour.
 * `DECRYPTION_FAILED`: An error during the Package decryption process. This could indicate a problem with the downloaded
   file or with the information received from the Server. If it happens on all deployments from a Package, consider
   re-uploading the Package-content.
@@ -174,3 +180,39 @@ can be returned in this case:
 
 ![Deployment Details](images/OPD/OPD_deployment_details.png)
 
+# Settings
+
+Here you can change the settings for OPD
+
+![Settings Page](images/OPD/OPD_Settings.png)
+
+## Registration Token
+
+This Token is required when an Agent wants to register on the Server. This token is automatically included in the
+installation scripts. The Token is auto generated at first startup. You can generate a new token by using
+the `Generate new Token`- Button.
+
+## Update Interval
+
+This interval specifies when an Agent should check for updates on the Server. A small number allows for fast deployments
+at potentially increased Server resource usage.
+
+Agents will use the new interval when they check for updates. Until then, it uses the old interval.
+
+## Install Retry Interval
+
+This interval specifies when a failed deployment is retried. The idea of this interval is to prevent a failed deployment
+from clocking up the que.
+
+## Deployment Validation
+
+The deployment validation is a background process, that is used to create and delete deployments for groups. It will
+also clear duplicate deployments and validates the `Direct Deployment`.
+
+The deployment validation is automatically run when members or packages are added or removed to/from a group.
+
+# Logs
+
+Here you can see all logs that were recorded on the Server.
+
+![Logs Page](images/OPD/OPD_Logs_with_filter.png)
