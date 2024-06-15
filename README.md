@@ -23,6 +23,7 @@ this [Image Folder](Documentation/images/OPD).
   * [Agent-Server Communication](#agent-server-communication)
   * [Packages](#packages)
   * [Agent Registration](#agent-registration)
+* [Privacy](#privacy)
 <!-- TOC -->
 
 # Features
@@ -117,3 +118,13 @@ will be deleted afterward.
 To initiate the registration process, a `Registration Token` needs to be sent. This Token is auto-generated on first
 start, and can be seen and updated/regenerated in the Settings.
 
+# Privacy
+
+OPD will only communicate with its own services. OPD has no tracking or analytics features. All data is stored on your
+system and nothing is shared.
+
+The Server will only communicate with Keycloak.
+
+The Frontend/Web-App will only communicate with the Server and Keycloak.
+
+The Agent will only communicate with the Server.
