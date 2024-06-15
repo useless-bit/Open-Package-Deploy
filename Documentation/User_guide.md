@@ -161,6 +161,7 @@ The Agent can return a `return value` starting with `AGENT-DEPLOYMENT-ERROR` to 
 can be returned in this case:
 
 * `UNKNOWN_ERROR`: This message should include more details with the actual error that occurred.
+  * `Package timeout during deployment`: The deployment was stopped after running for 1 hour.
 * `DECRYPTION_FAILED`: An error during the Package decryption process. This could indicate a problem with the downloaded
   file or with the information received from the Server. If it happens on all deployments from a Package, consider
   re-uploading the Package-content.
