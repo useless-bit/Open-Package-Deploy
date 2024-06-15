@@ -144,9 +144,11 @@ Explanation of values:
 * `Actual Return (Value)`: The value returned from the package (after executing the main script).
 * `Last Deployed At/Last Deployment Time`: Time when the Package was deployed on the Agent itself.
 
+![Deployment Overview](images/OPD/OPD_Deployments.png)
+
 ## When is a package successfully deployed
 
-* If the `Expectet Return (Value)` for a Package is empty, every response code (except `AGENT-DEPLOYMENT-ERROR`) are
+* If the `Expectet Return (Value)` for a Package is empty, every response code (except `AGENT-DEPLOYMENT-ERROR`) is
   considered successful.
 * If the `Expectet Return (Value)` for a Package is not empty, the deployment is considered successful when the
   Agent reports the specified/required value from the package deployment process.
@@ -158,18 +160,14 @@ Explanation of values:
 The Agent can return a `return value` starting with `AGENT-DEPLOYMENT-ERROR` to indicate an error. The following errors
 can be returned in this case:
 
-* `UNKNOWN_ERROR`:
-* `DECRYPTION_FAILED`:
-* `PLAINTEXT_CHECKSUM_MISMATCH`:
-* `ENCRYPTED_CHECKSUM_MISMATCH`:
-* `ENTRYPOINT_NOT_FOUND`:
-
-If an `Actual Return (Value)` starts with `AGENT-DEPLOYMENT-ERROR`, an error occurred on the Agent. These are the
-possible errors:
-
-* test
-
-![Deployment Overview](images/OPD/OPD_Deployments.png)
+* `UNKNOWN_ERROR`: This message should include more details with the actual error that occurred.
+* `DECRYPTION_FAILED`: An error during the Package decryption process. This could indicate a problem with the downloaded
+  file or with the information received from the Server. If it happens on all deployments from a Package, consider
+  re-uploading the Package-content.
+* `PLAINTEXT_CHECKSUM_MISMATCH`, `ENCRYPTED_CHECKSUM_MISMATCH`: Calculated checksum does not match the one provided from
+  the Server. Indicates an error with the download or the decryption.
+* `ENTRYPOINT_NOT_FOUND`: The required start script was not found in the Package. Linux and macOS require a filed
+  called `start.sh` while Windows requires a `start.bat`-file.
 
 ## Deployment Details
 
