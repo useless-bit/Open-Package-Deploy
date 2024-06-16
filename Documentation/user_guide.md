@@ -52,13 +52,13 @@ You can click on:
 
 This will open a popup, that also auto-refreshes when the dashboard does and shows you the relevant infos.
 
-![Dashboard](images/OPD/OPD_Dashboard.png)
+![Dashboard](images/OPD/OPD_dashboard.png)
 
 # Agents
 
 You can see the status of Agents, as well as add new ones.
 
-![Agent Overview](images/OPD/OPD_Agents_with_filter.png)
+![Agent Overview](images/OPD/OPD_agents_with_filter.png)
 
 ## Add a new Agent
 
@@ -91,7 +91,7 @@ You can also create/remove deployments and add/remove the Agent to/from Groups.
 OPD has support for groups, to make deployment of multiple Packages simpler. A group is for a specific OS and can have
 multiple Packages and Agents.
 
-![Group Overview](images/OPD/OPD_Groups.png)
+![Group Overview](images/OPD/OPD_groups.png)
 
 ## Create new Group
 
@@ -110,7 +110,7 @@ When you click on a group, you will get an popup, similar to [Agent Details](#ag
 
 Here you can manage all of your Packages.
 
-![Package Overview](images/OPD/OPD_Packages.png)
+![Package Overview](images/OPD/OPD_packages.png)
 
 ## Add new Package
 
@@ -150,7 +150,7 @@ Explanation of values:
 * `Actual Return (Value)`: The value returned from the package (after executing the main script).
 * `Last Deployed At/Last Deployment Time`: Time when the Package was deployed on the Agent itself.
 
-![Deployment Overview](images/OPD/OPD_Deployments.png)
+![Deployment Overview](images/OPD/OPD_deployments.png)
 
 ## When is a package successfully deployed
 
@@ -184,7 +184,7 @@ can be returned in this case:
 
 Here you can change the settings for OPD
 
-![Settings Page](images/OPD/OPD_Settings.png)
+![Settings Page](images/OPD/OPD_settings.png)
 
 ## Registration Token
 
@@ -215,4 +215,4 @@ The deployment validation is automatically run when members or packages are adde
 
 Here you can see all logs that were recorded on the Server.
 
-![Logs Page](images/OPD/OPD_Logs_with_filter.png)
+![Logs Page](images/OPD/OPD_logs_with_filter.png)
