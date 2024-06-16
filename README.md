@@ -81,24 +81,24 @@ The agent will contact and ask the server for updates in three scenarios:
 
 When the agent asks the server for updates, it will get and process the following data:
 
-- Agent Checksum (for Auto Update): Start the auto-update if checksum is different
-- `Update Interval`: Update the value in the local config-file and restart the Agent
+- Agent Checksum (for Auto Update): Start the auto-update if the checksum is different
+- `Update Interval`: Update the value in the local config file and restart the Agent
 - Is a deployment available: Start the package download and installation process
 
 # Security
 
 ## Agent-Server Communication
 
-The communication between the agent (Endpoint/Client) and the server is fully encrypted and signed.
+The communication between the agent (endpoint/client) and the server is fully encrypted and signed.
 
 Every request is first signed and then encrypted using asymmetric cryptography.
-The signature is using the `SHA512withECDSA`-algorithm while the encryption uses `ECIES/None/NoPadding`.
+The signature uses the `SHA512withECDSA`-algorithm, while the encryption uses `ECIES/None/NoPadding`.
 
 If a request is received, the content is first decrypted and then verified with the signature. If an error occurs, the
 request gets dropped.
 
-Every agent will generate its own public- and private-keypair. During the registration process, the agent will send its
-public-key to the server and gets the servers public-key.
+Every agent will generate its own public- and private-key pair. During the registration process, the agent will send its
+public key to the server and get the servers public key.
 
 ## Packages
 
