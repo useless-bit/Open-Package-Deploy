@@ -35,7 +35,7 @@ tables.
 
 The Dashboard provides an easy way to get an overview of all important Data.
 
-The dashboard auto-refreshes (the green progressbar under the `Options`-Panel shows when the next refresh happens and
+The dashboard auto-refreshes (the green progress bar under the `Options`-Panel shows when the next refresh happens and
 can be configured in the `Options`-Panel).
 
 You can click on:
@@ -50,7 +50,7 @@ You can click on:
     * Outstanding
     * Error
 
-This will open a popup, that also auto-refreshes when the dashboard does and shows you the relevant infos.
+This will open a popup, that also auto-refreshes when the dashboard does and shows you the relevant info.
 
 ![Dashboard](images/OPD/OPD_dashboard.png)
 
@@ -62,7 +62,8 @@ You can see the status of Agents, as well as add new ones.
 
 ## Add a new Agent
 
-When you press the `Add Agent`-Button, a popup will open where you can select your OS and it will show you a script that
+When you press the `Add Agent`-Button, a popup will open where you can select your OS, and it will show you a script
+that
 you can copy and execute on the Endpoint.
 
 ![Add Agent popup](images/OPD/OPD_add_new_agent_empty.png)
@@ -84,7 +85,7 @@ the Server, the available Packages will be deployed again.
 
 ![Agent Detail popup](images/OPD/OPD_agent_details.png)
 
-You can also create/remove deployments and add/remove the Agent to/from Groups.
+You can also create/remove deployments and add/remove the Agent to/from groups.
 
 # Groups
 
@@ -102,7 +103,7 @@ description.
 
 ## Group Details
 
-When you click on a group, you will get an popup, similar to [Agent Details](#agent-details).
+When you click on a group, you will get a popup, similar to [Agent Details](#agent-details).
 
 ![Group Detail popup](images/OPD/OPD_group_details.png)
 
@@ -120,17 +121,18 @@ In this popup, you have to specify a Name, the Checksum, the OS and a file. You 
 return
 value.
 
-If you want more information on how to create and add/update a Package, head over to the [Create a Package Guide](create_package.md).
+If you want more information on how to create and add/update a package, head over to
+the [Create a Package Guide](create_package.md).
 
 ![Add new Package](images/OPD/OPD_add_new_package.png)
 
 ## Package Details
 
-When opening the details of a Package,
+When opening the details of a package,
 
 The Button `Reset Deployments` will reset the status for all deployments for this Package.
 
-The Button `Update Content` allows you to upload a Package, that will replace the current one.
+The Button `Update Content` allows you to upload a p, that will replace the current one.
 
 ![Package Details](images/OPD/OPD_package_details.png)
 
@@ -140,15 +142,15 @@ Here you have an overview of all deployments.
 
 Explanation of values:
 
-* `Direct Deployment`: If `true` the Package was manually(directly) deployed to the Agent. If `false`, the Package is
+* `Direct Deployment`: If `true` the package was manually (directly) deployed to the Agent. If `false`, the Package is
   deployed through at minimum one group. If a Package is available through a group and as a direct deployment, it will
   be `true` until the deployment gets deleted. Then it will turn to `false` and is deployed through the group.
-* `Deployed`: `true` if the Package was successfully deployed on the Agent, otherwise `false`.
-* `Expected Return (Value)`: Is the value specified for the Package itself. Defines when a package is considered
-  successfully deployed (more infos
+* `Deployed`: `true` if the package was successfully deployed on the Agent, otherwise `false`.
+* `Expected Return (Value)`: Is the value specified for the package itself. Defines when a package is considered
+  successfully deployed (more info
   at [When is a package successfully deployed](#when-is-a-package-successfully-deployed)).
 * `Actual Return (Value)`: The value returned from the package (after executing the main script).
-* `Last Deployed At/Last Deployment Time`: Time when the Package was deployed on the Agent itself.
+* `Last Deployed At/Last Deployment Time`: Time when the package was deployed on the agent.
 
 ![Deployment Overview](images/OPD/OPD_deployments.png)
 
@@ -159,7 +161,7 @@ Explanation of values:
 * If the `Expectet Return (Value)` for a Package is not empty, the deployment is considered successful when the
   Agent reports the specified/required value from the package deployment process.
 * A return value starting with `AGENT-DEPLOYMENT-ERROR` is always considered unsuccessful, as it indicates an error
-  on the Agent side. More infos at [Agent Errors](#agent-errors)
+  on the Agent side. More info at [Agent Errors](#agent-errors)
 
 ## Agent Errors
 
@@ -168,7 +170,7 @@ can be returned in this case:
 
 * `UNKNOWN_ERROR`: This message should include more details with the actual error that occurred.
     * `Package timeout during deployment`: The deployment was stopped after running for 1 hour.
-* `DECRYPTION_FAILED`: An error during the Package decryption process. This could indicate a problem with the downloaded
+* `DECRYPTION_FAILED`: An error during the package decryption process. This could indicate a problem with the downloaded
   file or with the information received from the Server. If it happens on all deployments from a Package, consider
   re-uploading the Package-content.
 * `PLAINTEXT_CHECKSUM_MISMATCH`, `ENCRYPTED_CHECKSUM_MISMATCH`: Calculated checksum does not match the one provided from
@@ -194,25 +196,26 @@ the `Generate new Token`- Button.
 
 ## Update Interval
 
-This interval specifies when an Agent should check for updates on the Server. A small number allows for fast deployments
-at potentially increased Server resource usage.
+This interval specifies when an agent should check for updates on the server. A small number allows for fast deployments
+with potentially increased server resource usage.
 
 Agents will use the new interval when they check for updates. Until then, it uses the old interval.
 
 ## Install Retry Interval
 
-This interval specifies when a failed deployment is retried. The idea of this interval is to prevent a failed deployment
-from clocking up the que.
+This interval specifies when a failed deployment is retried. The idea behind this interval is to prevent a failed
+deployment
+from clocking up the queue.
 
 ## Deployment Validation
 
-The deployment validation is a background process, that is used to create and delete deployments for groups. It will
-also clear duplicate deployments and validates the `Direct Deployment`.
+The deployment validation is a background process that is used to create and delete deployments for groups. It will
+also clear duplicate deployments and validate the `Direct Deployment`.
 
 The deployment validation is automatically run when members or packages are added or removed to/from a group.
 
 # Logs
 
-Here you can see all logs that were recorded on the Server.
+Here you can see all the logs that were recorded on the server.
 
 ![Logs Page](images/OPD/OPD_logs_with_filter.png)
