@@ -43,6 +43,6 @@ To run OPD (front- and backend), follow these steps:
    ![Create new User dialog](images/Keycloak/Keycloak_create_new-User-dialog.png)
    ![Update User password](images/Keycloak/Keycloak_update_User_password.png)
 9. You should now be able to access OPD by visiting the `FRONTEND_URL`. <br>
-   You should check out the [Recommended Keycloak Settings](Keycloak_recommended_settings.md).
+   You should check out the [Recommended Keycloak Settings](keycloak_recommended_settings.md).
 
    
