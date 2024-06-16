@@ -120,11 +120,6 @@ start, and can be seen and updated/regenerated in the Settings.
 
 # Privacy
 
-OPD will only communicate with its own services. OPD has no tracking or analytics features. All data is stored on your
-system and nothing is shared.
+OPD will only communicate with its own services (in the `docker-compose.yml`).
 
-The Server will only communicate with Keycloak.
-
-The Frontend/Web-App will only communicate with the Server and Keycloak.
-
-The Agent will only communicate with the Server.
+OPD has no tracking or analytics features. All data is stored on your system and nothing is shared.
