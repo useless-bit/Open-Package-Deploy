@@ -8,7 +8,7 @@ the [frontend](https://github.com/useless-bit/Open-Package-Deploy-Frontend) is a
 You can find some screenshots of the UI in the [User Guide](Documentation/User_guide.md) or
 this [image folder](Documentation/images/OPD).
 
-![Image of Dashboard](Documentation/images/OPD/OPD_Dashboard.png)
+![Image of Dashboard](Documentation/images/OPD/OPD_dashboard.png)
 
 <!-- TOC -->
 * [Open Package Deploy](#open-package-deploy)
