@@ -50,7 +50,7 @@ You can click on:
     * Outstanding
     * Error
 
-This will open a popup, that also auto-refreshes when the dashboard does and shows you the relevant info.
+This will open a popup that also auto-refreshes when the dashboard does and shows you the relevant info.
 
 ![Dashboard](images/OPD/OPD_dashboard.png)
 
@@ -63,8 +63,7 @@ You can see the status of Agents, as well as add new ones.
 ## Add a new Agent
 
 When you press the `Add Agent`-Button, a popup will open where you can select your OS, and it will show you a script
-that
-you can copy and execute on the Endpoint.
+that you can copy and execute on the endpoint/client.
 
 ![Add Agent popup](images/OPD/OPD_add_new_agent_empty.png)
 
@@ -103,7 +102,7 @@ description.
 
 ## Group Details
 
-When you click on a group, you will get a popup, similar to [Agent Details](#agent-details).
+When you click on a group, you will get a popup similar to [Agent Details](#agent-details).
 
 ![Group Detail popup](images/OPD/OPD_group_details.png)
 
@@ -130,9 +129,9 @@ the [Create a Package Guide](create_package.md).
 
 When opening the details of a package,
 
-The Button `Reset Deployments` will reset the status for all deployments for this Package.
+The button `Reset Deployments` will reset the status for all deployments for this Package.
 
-The Button `Update Content` allows you to upload a p, that will replace the current one.
+The button `Update Content` allows you to upload a p, that will replace the current one.
 
 ![Package Details](images/OPD/OPD_package_details.png)
 
@@ -142,10 +141,10 @@ Here you have an overview of all deployments.
 
 Explanation of values:
 
-* `Direct Deployment`: If `true` the package was manually (directly) deployed to the Agent. If `false`, the Package is
-  deployed through at minimum one group. If a Package is available through a group and as a direct deployment, it will
+* `Direct Deployment`: If `true` the package was manually (directly) deployed to the agent. If `false`, the package is
+  deployed through at least one group. If a package is available through a group and as a direct deployment, it will
   be `true` until the deployment gets deleted. Then it will turn to `false` and is deployed through the group.
-* `Deployed`: `true` if the package was successfully deployed on the Agent, otherwise `false`.
+* `Deployed`: `true` if the package was successfully deployed on the agent, otherwise `false`.
 * `Expected Return (Value)`: Is the value specified for the package itself. Defines when a package is considered
   successfully deployed (more info
   at [When is a package successfully deployed](#when-is-a-package-successfully-deployed)).
@@ -161,7 +160,7 @@ Explanation of values:
 * If the `Expectet Return (Value)` for a Package is not empty, the deployment is considered successful when the
   Agent reports the specified/required value from the package deployment process.
 * A return value starting with `AGENT-DEPLOYMENT-ERROR` is always considered unsuccessful, as it indicates an error
-  on the Agent side. More info at [Agent Errors](#agent-errors)
+  on the agent side. More info at [Agent Errors](#agent-errors)
 
 ## Agent Errors
 
@@ -171,8 +170,8 @@ can be returned in this case:
 * `UNKNOWN_ERROR`: This message should include more details with the actual error that occurred.
     * `Package timeout during deployment`: The deployment was stopped after running for 1 hour.
 * `DECRYPTION_FAILED`: An error during the package decryption process. This could indicate a problem with the downloaded
-  file or with the information received from the Server. If it happens on all deployments from a Package, consider
-  re-uploading the Package-content.
+  file or with the information received from the server. If it happens on all deployments from a package, consider
+  re-uploading the package content.
 * `PLAINTEXT_CHECKSUM_MISMATCH`, `ENCRYPTED_CHECKSUM_MISMATCH`: Calculated checksum does not match the one provided from
   the Server. Indicates an error with the download or the decryption.
 * `ENTRYPOINT_NOT_FOUND`: The required start script was not found in the Package. Linux and macOS require a filed
@@ -216,6 +215,6 @@ The deployment validation is automatically run when members or packages are adde
 
 # Logs
 
-Here you can see all the logs that were recorded on the server.
+Here, you can see all the logs that were recorded on the server.
 
 ![Logs Page](images/OPD/OPD_logs_with_filter.png)
