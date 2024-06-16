@@ -5,7 +5,7 @@ OPD (Open Package Deploy) allows you to deploy almost everything, everywhere, ea
 The code for the [backend (server and agent)](https://github.com/useless-bit/Open-Package-Deploy-Backend) and
 the [frontend](https://github.com/useless-bit/Open-Package-Deploy-Frontend) is available on GitHub.
 
-You can find some screenshots of the UI in the [User Guide](Documentation/User_guide.md) or
+You can find some screenshots of the UI in the [User Guide](Documentation/user_guide.md) or
 this [image folder](Documentation/images/OPD).
 
 ![Image of Dashboard](Documentation/images/OPD/OPD_dashboard.png)
@@ -56,14 +56,14 @@ this [GitHub repository](https://github.com/useless-bit/Open-Package-Deploy-Pack
 
 # Installation
 
-To get OPD up and running, follow the [Quickstart Guide](Documentation/Quickstart.md).
+To get OPD up and running, follow the [Quickstart Guide](Documentation/quickstart.md).
 There, you will set up OPD, Keycloak and the required databases using Docker and Docker Compose.
 
-Don't forget to check out the [Recommended Keycloak Settings](Documentation/Keycloak_recommended_settings.md)
+Don't forget to check out the [Recommended Keycloak Settings](Documentation/keycloak_recommended_settings.md)
 
 # User Guide
 
-If you want to learn more about how to use OPD, head over to the [User Guide](Documentation/User_guide.md).
+If you want to learn more about how to use OPD, head over to the [User Guide](Documentation/user_guide.md).
 
 # Agent Functionality
 

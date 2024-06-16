@@ -38,4 +38,4 @@ You can change the `SSO Session Settings` to stay logged in for longer. The imag
 
 # Create/Add new User
 
-If you want to add a new user, head over to the [Quickstart Guide](Quickstart.md), step 8.
+If you want to add a new user, head over to the [Quickstart Guide](quickstart.md), step 8.
