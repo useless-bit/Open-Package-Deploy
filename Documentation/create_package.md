@@ -54,7 +54,7 @@ echo "Checksum: $checksum"
 ## Upload a Package
 
 1. You can upload a new package on the `Packages`-Page after pressing `Add Package`.
-2. You need to specify a name, the checksum of the zip file and the zip file itself.
+2. You need to specify a name, the checksum of the zip file, and the zip file itself.
 3. After uploading the package, the server will automatically process it (validating the checksum, encrypting and
    testing the encryption).
 
